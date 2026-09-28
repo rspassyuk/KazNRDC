@@ -1,0 +1,32 @@
+# External nuclear data and local runs
+/xsdir/
+*.kaz
+
+# Python generated files and environments
+__pycache__/
+*.py[cod]
+.cache/
+.pytest_cache/
+.venv/
+venv/
+*.egg-info/
+build/
+dist/
+
+# Documentation output
+/docs/_build/
+
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
+
+# Local-only documentation and notebook checkpoints
+/MANUAL_RU.md
+/Architecture_rus.md
+/docs/manual-ru.md
+.ipynb_checkpoints/

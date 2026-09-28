@@ -1,0 +1,85 @@
+{
+  "82-Pb-209": {
+    "decay": {
+      "half_life_s": 11710.8,
+      "channels": [
+        {"mode": "beta-", "branch": 1.0, "Q_MeV": 0.644, "dz": 1, "da": 0, "rfs": 0}
+      ]
+    },
+    "neutrons": {
+      "102": { "Q_MeV": 5.12, "macs": [
+        {"kT_keV": 30, "sigma_mb": 1.5}
+      ]}
+    }
+  },
+  "82-Pb-210": {
+    "decay": {
+      "half_life_s": 7.01e8,
+      "channels": [
+        {"mode": "beta-", "branch": 1.0, "Q_MeV": 0.064, "dz": 1, "da": 0, "rfs": 0}
+      ]
+    },
+    "neutrons": {
+      "102": { "Q_MeV": 5.79, "macs": [
+        {"kT_keV": 30, "sigma_mb": 0.9}
+      ]}
+    }
+  },
+
+
+  "82-Pb-211": {
+    "decay": {
+      "half_life_s": 2166.0,
+      "channels": [
+        {"mode": "beta-", "branch": 1.0, "Q_MeV": 1.37, "dz": 1, "da": 0, "rfs": 0}
+      ]
+    }
+  },
+
+
+  "83-Bi-210": {
+    "decay": {
+      "half_life_s": 433000.0,
+      "channels": [
+        {"mode": "beta-", "branch": 0.99999, "Q_MeV": 1.16, "dz": 1, "da": 0, "rfs": 0},
+        {"mode": "alpha", "branch": 1.0e-5, "Q_MeV": 5.04, "dz": -2, "da": -4, "rfs": 0}
+      ]
+    },
+    "neutrons": {
+      "102": { "Q_MeV": 4.98, "macs": [
+        {"kT_keV": 30, "sigma_mb": 2.0}
+      ]}
+    }
+  },
+
+
+  "83-Bi-211": {
+    "decay": {
+      "half_life_s": 128.4,
+      "channels": [
+        {"mode": "alpha", "branch": 0.99724, "Q_MeV": 6.75, "dz": -2, "da": -4, "rfs": 0},
+        {"mode": "beta-", "branch": 0.00276, "Q_MeV": 0.575, "dz": 1, "da": 0, "rfs": 0}
+      ]
+    }
+  },
+
+
+  "84-Po-210": {
+    "decay": {
+      "half_life_s": 1.196e7,
+      "channels": [
+        {"mode": "alpha", "branch": 1.0, "Q_MeV": 5.41, "dz": -2, "da": -4, "rfs": 0}
+      ]
+    }
+  },
+
+
+  "84-Po-211": {
+    "decay": {
+      "half_life_s": 0.516,
+      "channels": [
+        {"mode": "alpha", "branch": 1.0, "Q_MeV": 7.59, "dz": -2, "da": -4, "rfs": 0}
+      ]
+    }
+  }
+}

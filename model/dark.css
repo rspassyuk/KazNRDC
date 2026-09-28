@@ -1,0 +1,1476 @@
+/* =====================================================================
+   AP.CORE design tokens — dark theme (warm palette).
+   Qt Style Sheets have no CSS variables/var() — these are documented here
+   and used as literal hex values throughout this file. Keep them in sync
+   if the palette changes.
+
+     bg-base        #1a1714   bg-panel       #241f1b   bg-elevated  #2e2823
+     text-primary   #f5ede4   text-secondary #c4b6a6   border       #3d352e
+     accent         #e8943a   accent-hover   #f2a854   accent-2     #d4663a
+     success        #c2a23a   danger         #d65a4a
+
+   All 5 accent/success/danger tokens are bright enough that DARK text
+   (#1a1714) reads better on them than light text — verified by WCAG
+   contrast computation, not assumption. Semantic chart / periodic-table
+   button colours are untouched (different convention, see model_CoreNucleo
+   / model_IsotopeChart).
+   ===================================================================== */
+QMainWindow {
+    background-color: #1a1714;
+    border-color: #1a1714;
+}
+QLabel {
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    font-size: 14px;
+    color: #f5ede4;
+    background: transparent;
+}
+QCheckBox, QRadioButton, QGroupBox {
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    font-size: 14px;
+    color: #f5ede4;
+}
+QGroupBox {
+    border: 1px solid #3d352e;
+    border-radius: 7px;
+    margin-top: 14px;
+    padding: 18px 14px 14px 14px;
+}
+QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 10px;
+    padding: 0 6px;
+    color: #c4b6a6;
+}
+QPushButton {
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    font-size: 14px;
+    min-height: 40px;
+    padding: 8px 18px;
+    border-radius: 7px;
+}
+QLineEdit, QTextEdit, QPlainTextEdit, QSpinBox, QDoubleSpinBox {
+    background-color: #2e2823;
+    color: #f5ede4;
+    border: 1px solid #3d352e;
+    border-radius: 7px;
+    selection-background-color: #e8943a;
+    selection-color: #1a1714;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    font-size: 14px;
+}
+QLineEdit, QSpinBox, QDoubleSpinBox {
+    min-height: 40px;
+    padding: 0 10px;
+}
+QComboBox {
+    background-color: #2e2823;
+    color: #f5ede4;
+    border: 1px solid #3d352e;
+    border-radius: 7px;
+    min-height: 40px;
+    padding: 0 10px;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    font-size: 14px;
+}
+QComboBox QAbstractItemView {
+    background-color: #241f1b;
+    color: #f5ede4;
+    selection-background-color: #e8943a;
+    selection-color: #1a1714;
+}
+QListWidget, QListView, QTreeView, QTableView {
+    background-color: #2e2823;
+    color: #f5ede4;
+    selection-background-color: #e8943a;
+    selection-color: #1a1714;
+    gridline-color: #3d352e;
+    border: 1px solid #3d352e;
+    border-radius: 7px;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    font-size: 14px;
+}
+QHeaderView::section {
+    background-color: #241f1b;
+    color: #f5ede4;
+    border: 1px solid #3d352e;
+    padding: 4px 6px;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+}
+QTabBar::tab {
+    background: #241f1b;
+    color: #c4b6a6;
+    padding: 8px 20px;
+    min-width: 80px;
+    margin-right: 2px;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    font-size: 14px;
+}
+QTabBar::tab:selected {
+    background: #e8943a;
+    color: #1a1714;
+    font-weight: 600;
+}
+QTabWidget::pane {
+    border: 1px solid #3d352e;
+}
+QToolTip {
+    background-color: #2e2823;
+    color: #f5ede4;
+    border: 1px solid #3d352e;
+}
+/* Built-in dialogs (QMessageBox / QProgressDialog / QInputDialog / QFileDialog)
+   carry no objectName, so without an explicit rule they fall back to the OS
+   palette (light) background while the global QLabel rule paints their text
+   near-white — leaving the message invisible ("empty" dialogs). Give them the
+   dark surface so text and buttons read correctly. */
+QDialog, QMessageBox, QProgressDialog, QInputDialog, QFileDialog {
+    background-color: #241f1b;
+    color: #f5ede4;
+}
+QMessageBox QLabel, QProgressDialog QLabel,
+QInputDialog QLabel, QFileDialog QLabel {
+    color: #f5ede4;
+    background: transparent;
+}
+QMessageBox QPushButton, QProgressDialog QPushButton,
+QInputDialog QPushButton, QFileDialog QPushButton {
+    background-color: #e8943a;
+    color: #1a1714;
+    border: 1px solid #f2a854;
+    min-width: 80px;
+}
+QMessageBox QPushButton:hover, QProgressDialog QPushButton:hover,
+QInputDialog QPushButton:hover, QFileDialog QPushButton:hover {
+    background-color: #f2a854;
+}
+/* Buttons that previously fell back to the default (white) button style.
+   Targeted by name — a blanket QPushButton colour rule would override the
+   periodic-table / isotope-cell colours. */
+QPushButton#find_cycle_pb,
+QPushButton#export_decay_btn,
+QPushButton#export_neutron_btn {
+    background-color: #e8943a;
+    color: #1a1714;
+}
+QPushButton#find_cycle_pb:hover,
+QPushButton#export_decay_btn:hover,
+QPushButton#export_neutron_btn:hover {
+    background-color: #f2a854;
+}
+QPushButton#find_cycle_pb:disabled,
+QPushButton#export_decay_btn:disabled,
+QPushButton#export_neutron_btn:disabled {
+    background-color: #2e2823;
+    color: #6b6259;
+}
+/* Scrollbars: keep them dark instead of the bright default. */
+QScrollBar:vertical { background: #1a1714; width: 12px; margin: 0; }
+QScrollBar:horizontal { background: #1a1714; height: 12px; margin: 0; }
+QScrollBar::handle { background: #3d352e; border-radius: 5px; }
+QScrollBar::handle:vertical { min-height: 20px; }
+QScrollBar::handle:horizontal { min-width: 20px; }
+QScrollBar::handle:hover { background: #4a4038; }
+QScrollBar::add-line, QScrollBar::sub-line { width: 0; height: 0; }
+QScrollBar::add-page, QScrollBar::sub-page { background: transparent; }
+
+/* Left navigation toolbar — icon stays unchanged; background/border signal state */
+QToolBar#left_nav_toolbar {
+    background-color: #1a1714;
+    border: none;
+    padding: 4px 2px;
+    spacing: 4px;
+}
+QToolBar#left_nav_toolbar QToolButton {
+    background: transparent;
+    border: 2px solid transparent;
+    border-radius: 7px;
+    padding: 2px;
+    margin: 2px;
+}
+QToolBar#left_nav_toolbar QToolButton:hover {
+    background-color: #2e2823;
+}
+QToolBar#left_nav_toolbar QToolButton:checked {
+    background-color: #2e2823;
+    border: 2px solid #e8943a;
+}
+
+QGraphicsView#foo{
+    background-color: #241f1b;
+}
+QWidget#fooo{
+    background-color: #241f1b;
+}
+QGraphicsScene{
+    background-color: #241f1b;
+}
+QPushButton#stable {
+    background-color: black; /* ���������� */
+}
+
+QPushButton[objectName="beta-"] {
+    background-color: cyan; /* ���������� */
+}
+
+QPushButton[objectName="beta+"] {
+    background-color: green; /* ���������� */
+}
+
+QPushButton[objectName="EC"] {
+    background-color: lightgreen; /* ���������� */
+}
+QPushButton[objectName="alpha"] {
+    background-color: yellowgreen; /* ���������� */
+}
+
+QPushButton[objectName="sf"] {
+    background-color: palevioletred; /* ���������� */
+}
+
+QPushButton[objectName="p"] {
+    background-color: #cc9966; /* ���������� */
+}
+
+QPushButton[objectName="n"] {
+    background-color: darkviolet; /* ���������� */
+}
+
+QPushButton[objectName="2b-"] {
+    background-color: cyan; /* ���������� */
+}
+
+QPushButton[objectName="2b+"] {
+    background-color: green; /* ���������� */}
+
+
+/*����� ������������ ��������� - ������������ ����� ��������*/
+QGroupBox#The_center_widget {
+    border-style: outset;
+    border-width: 0px;
+    margin: 1px;
+    border: none;
+    margin: 0;
+    padding: 0;
+}   /*����� ����� ������������ ���������*/
+    QGroupBox#The_center_widget::title {
+        background-color: transparent;
+        border-width: 0px;
+        padding: 0px;
+        border: none;
+        /*���� �������*/
+        color: transparent;
+    }
+
+
+/*����� ��������� ��� left ��������*/
+QGroupBox#MainWidget {
+    border-style: outset;
+    border-width: 0px;
+    margin: 1px;
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+    /*����� ����� ������������ ���������*/
+    QGroupBox#MainWidget::title {
+        background-color: transparent;
+        border-width: 0px;
+        padding: 0px;
+        border: none;
+        /*���� �������*/
+        color: transparent;
+    }
+
+
+/*����� Menu-����*/
+QMenuBar {
+    /*�����-����� ��� ����*/
+    background-color: #1a1714;
+    /*����� ����� ����*/
+    color: #FFFFFF;
+    /*������� ����*/
+    border: 1px solid #444444;
+    /*���������� ����� ����������*/
+    /* spacing: 10px; */
+}
+    /*����� ��������� ����-����*/
+    QMenuBar::item {
+        /*���������� ��� ��� ��������� ����*/
+        background-color: transparent;
+        /*����� ����� ��������� ����*/
+        color: #FFFFFF;
+        /*��������� �������*/
+        padding: 0 15px;
+        /*���������� ����� ��������*/
+        margin: 0 5px;
+    }
+        /*����� ��������� ���� ���� ��� ���������*/
+        QMenuBar::item:selected {
+            background-color: rgba(255,255,20,50);
+        }
+
+/*����� Menu*/
+QMenu {
+    /*�����-����� ��� ����������� ����*/
+    background-color: #333333;
+    /*����� ����� ����������� ����*/
+    color: #FFFFFF;
+    /*������� ����������� ����*/
+    border: 1px solid #555555;
+}
+    /*����� ��������� Menu ��� ���������*/
+    QMenu::item:selected {
+        /* ������-����� ��� ��� ��������� */
+        background-color: rgba(255,255,20,50);
+        /* ����� ����� ��� ��������� */
+        color: #FFFFFF;
+    }
+
+
+/*����� menu line*/
+QFrame#menuline {
+    color: orange;
+    background-color: orange;
+    height: 4px;
+}
+QComboBox {
+    border: 1px black;
+    border-radius: 3px;
+    padding: 1px 18px 1px 3px;
+    min-width: 6em;
+}
+
+/*����� ����� ����� ���������*/
+QSplitter#mainhorsplitter::handle {
+    background-color: orange; /*#1a1714; /*#283d3d; /*orange;*/
+}
+QSplitter#mainhorsplitter::handle:pressed {
+    background-color: orangered;
+}
+
+
+/*����� GUI ���������*/
+QWidget#GUITerminal {
+    border: none;
+    border-width: 0px;
+    padding: 0px;
+    margin: 0;
+}
+/*����� ����� GUI ���������*/
+QLabel#terminal_label {
+    color: forestgreen;/*#283d3d; /*white;*/
+    font-size: 32px;
+    font-weight: bold;
+    padding: 0px;
+    margin: 0;
+}
+/*����� ������ �������� GUI ���������*/
+QPushButton#close_terminal_button {
+    border: none;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+}
+    /*����� ������ �������� GUI ��������� ��� �������*/
+    QPushButton#close_terminal_button:hover {
+        background-color: rgba(255, 255, 20, 50);
+        padding: 0;
+        margin: 0;
+    }
+QTextEdit#terminal_text_editor {
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 14px;
+    color: #FFFFFF;
+    background-color: #1a1714;
+    border: none;
+    padding: 15px;
+}
+
+
+
+/*����� ���-���� ��� ����� ������ ������������ ����� ����������*/
+    QToolBar {
+    background-color: #1a1714;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-top: 2px solid;
+    border-top-color: orange;
+}
+/*����� ������ ���-����*/
+QToolButton {
+    border: 2px;
+    background-color: #1a1714;
+    border-radius: 16px;
+    margin: 10px;
+    color: #283d3d;
+    margin-top: 15px;
+}
+    /*����� ������ ���-���� ��� ���������*/
+    QToolButton:hover {
+        background-color: rgba(255,255,20,50);
+        color: darkorange;
+    }
+        /*����� ������ ������ ���-���� ��� ���������*/
+        /* QToolButton:hover QIcon { */
+        /* } */
+    /*����� ������ ���-���� ��� �������*/
+    QToolButton:pressed {
+        padding: 4px;
+        color: green;
+    }
+
+
+/*����� ��� ������� ������� ���������� � �����*/
+QDockWidget{
+    /*font-family: "monospace";*/
+    font-family: Consolas;
+    font-size: 10pt;
+    color: #283d3d;
+    border-width: 5px;
+    background-color: #1a1714;
+    border-color: #1a1714;
+    padding-left: 1px;
+    padding-top: 10px;
+    margin: 5px;
+}
+    /*����� ����� ��� ������� ������� ���������� � �����*/
+    QDockWidget:title {
+        background-color: #1a1714;
+        border-color: #1a1714;
+        border-radius: 1px;
+        margin-top: 8px;
+    }
+    /*����� ����������(���������� QGroupBox) � ���� ���-������� */
+    QGroupBox#dashborder {
+        border: 5px solid #1a1714;
+        margin-top: 0px;
+        margin-bottom: 0px;
+        margin-right: 0px;
+    }
+
+
+
+
+/* ----------MODELS STYLESHEETS---------------*/
+
+
+/*Usage models styles:*/
+
+/*Styles of Left of Usage models*/
+QGroupBox#gbox_usage_left {
+    background-image: url('AFI.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    border-radius: 0px;
+    margin-top: 20px;
+}
+    QGroupBox#gbox_usage_left:title {
+        /* subcontrol-origin: margin;
+        subcontrol-position: top center; */
+        padding: 0 10px;
+        background-color: rgba(255, 255, 255, 0.7);
+        border-radius: 0px;
+        border: none;
+    }
+
+/*Styles of right of Usage models*/
+QLabel#usage_right_label {
+    /*  #283d3d ������� ��� */
+    background-color: #1a1714;
+    /* ����� ����� */
+    color: white;
+    /* ������������ ���� */
+    border-radius: 50px;
+    /* ���������� ������� */
+    padding: 15px;
+    /* ������ ������ */
+    font-size: auto;
+
+}
+
+
+QCheckBox#usage_right_checkbox {
+    /* ������ ������ */
+    font-size: auto;
+    color: white;
+}
+
+/*��������� ������*/
+QPushButton#right_btn_accept {
+    /* �������� ��������� ������ */
+    background-color: gray;
+    color: white;
+    border-radius: 15px;
+    font-size: auto;
+    padding: 8px;
+}
+/* ������ � ��������� enabled (��������) */
+QPushButton#right_btn_accept:enabled {
+    background-color: #283d3d;
+    color: white;
+}
+/* ������ � ��������� disabled (����������) */
+QPushButton#right_btn_accept:disabled {
+    background-color: gray;
+    color: lightgray;
+}
+/* ������ � ��������� pressed (������) */
+QPushButton#right_btn_accept:pressed {
+    background-color: #bfd7ed;
+    color: white;
+    /* ������������ ���� */
+    border-radius: 15px;
+    /* ������ ������ */
+    font-size: auto;
+    padding: 8px;
+}
+/*****End of Usage model stylesheets.******/
+
+
+/*Styles of Mendeleev models*/
+
+/* ���������� ������� */
+QPushButton[objectName="alkali_metal"] {
+    background-color: #ff6666; /* ������� */
+}
+
+QPushButton[objectName="alkaline_earth_metal"] {
+    background-color: #ffcc66; /* ��������� */
+}
+
+QPushButton[objectName="transition_metal"] {
+    background-color: #9966cc; /* ���������� */
+}
+
+QPushButton[objectName="metalloid"] {
+    background-color: #669999; /* ����-������� */
+}
+
+QPushButton[objectName="nonmetal"] {
+    background-color: #3366cc; /* ����� */
+}
+
+QPushButton[objectName="halogen"] {
+    background-color: #ff9966; /* ���������� */
+}
+
+QPushButton[objectName="noble_gas"] {
+    background-color: #cc6699; /* ������� */
+}
+
+QPushButton[objectName="post_transition_metal"] {
+    background-color: #66cc99; /* ��������� */
+}
+
+QPushButton[objectName="lanthanide"] {
+    background-color: #0099cc; /* ������� */
+}
+
+QPushButton[objectName="actinide"] {
+    background-color: #cc9966; /* ���������� */
+}
+
+/* ����� ������ */
+QPushButton:hover {
+    border: 2px solid white;
+}
+QPushButton:checked {
+    border: 4px solid black;
+    font-weight: bold;
+}
+
+QComboBox#select_db {
+    background-color: #e8943a;
+    color: #1a1714;
+    border-radius: 7px;
+    padding: 5px;
+}
+
+QComboBox#select_cb {
+    background-color: #e8943a;
+    color: #1a1714;
+    border-radius: 7px;
+    padding: 5px;
+}
+QComboBox#select_db QAbstractItemView {
+    background-color: #e8943a;
+    color: #1a1714;
+    border-radius: 7px;
+}
+
+QComboBox#select_db QAbstractItemView::item:selected {
+    background-color: #f2a854;
+    color: #1a1714;
+}
+
+QComboBox#select_db QAbstractItemView::item:hover {
+    background-color: #f2a854;
+}
+
+QComboBox QAbstractItemView::item:selected #select_db {
+        background-color: #f2a854;
+        color: #1a1714;
+    }
+
+QComboBox#select_cb QAbstractItemView {
+    background-color: #e8943a;
+    color: #1a1714;
+    border-radius: 7px;
+}
+
+QComboBox#select_cb QAbstractItemView::item:selected {
+    background-color: #f2a854;
+    color: #1a1714;
+}
+
+QComboBox#select_cb QAbstractItemView::item:hover {
+    background-color: #f2a854;
+}
+
+QComboBox QAbstractItemView::item:selected #select_cb {
+        background-color: #f2a854;
+        color: #1a1714;
+    }
+
+QLabel#info_label {
+    color: #1a1714;
+    background-color: #e8943a;
+    font-size: 22px;
+    font-weight: bold;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    border-radius: 7px;
+}
+
+QTabWidget#info_state {
+    background-color: #241f1b;
+}
+
+QTabWidget#info_state::pane {
+    border: 1px solid #3d352e;
+    border-radius: 7px;
+    background: #241f1b;
+    top: -1px;
+}
+
+QTabWidget#info_state::tab-bar {
+    alignment: left;
+    left: 8px;
+}
+
+QTabWidget#info_state QTabBar::tab {
+    background-color: #241f1b;
+    color: #c4b6a6;
+    padding: 8px 16px;
+    margin-right: 4px;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    min-width: 140px;
+}
+
+/* Decaydata (first tab) uses --accent; NReactiondata (last tab) uses
+   --accent-2 so the two information tabs read as distinct at a glance. */
+QTabWidget#info_state QTabBar::tab:last {
+    background-color: #d4663a;
+    color: #1a1714;
+}
+
+QTabWidget#info_state QTabBar::tab:selected {
+    background-color: #e8943a;
+    color: #1a1714;
+    font-weight: bold;
+}
+
+QTabWidget#info_state QTabBar::tab:last:selected {
+    background-color: #e08458;
+    color: #1a1714;
+}
+
+QTabWidget#info_state QTabBar::tab:hover {
+    background-color: #f2a854;
+    color: #1a1714;
+}
+
+QTabWidget#info_state QTabBar::tab:last:hover {
+    background-color: #e08458;
+    color: #1a1714;
+}
+
+QTextEdit#info_text_main,
+QTextEdit#info_text_chanels {
+    color: #f5ede4;
+    background-color: #2e2823;
+    font-size: 14px;
+    font-family: "DejaVu Sans Mono", "Consolas", monospace;
+    border: 1px solid #3d352e;
+    border-radius: 7px;
+    padding: 8px;
+}
+
+/* CoreNucleo — database multi-select */
+QGroupBox#db_group {
+    color: #f5ede4;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    border: 1px solid #3d352e;
+    border-radius: 7px;
+    margin-top: 22px;            /* reserve a band for the title above the border */
+    padding: 8px 6px 6px 6px;    /* keep checkboxes clear of the title/border */
+}
+QGroupBox#db_group::title {
+    subcontrol-origin: margin;
+    subcontrol-position: top left;
+    left: 10px;
+    top: 3px;
+    padding: 0 4px;
+    font-size: 13px;
+}
+QCheckBox#db_check {
+    color: white;
+    spacing: 5px;
+    padding: 2px 6px;
+}
+
+
+
+/*Styles of Left of Table of Nuclides models*/
+QPushButton#stable {
+    background-color: black; /* ���������� */
+}
+
+QPushButton[objectName="b-"] {
+    background-color: cyan; /* ���������� */
+}
+
+QPushButton[objectName="b+"] {
+    background-color: green; /* ���������� */
+}
+
+QPushButton[objectName="EC"] {
+    background-color: lightgreen; /* ���������� */
+}
+QPushButton[objectName="a"] {
+    background-color: yellowgreen; /* ���������� */
+}
+
+QPushButton[objectName="SF"] {
+    background-color: palevioletred; /* ���������� */
+}
+
+QPushButton[objectName="p"] {
+    background-color: #cc9966; /* ���������� */
+}
+
+QPushButton[objectName="n"] {
+    background-color: darkviolet; /* ���������� */
+}
+
+QPushButton[objectName="2b-"] {
+    background-color: cyan; /* ���������� */
+}
+
+QPushButton[objectName="2b+"] {
+    background-color: green; /* ���������� */
+}
+
+QLabel#set_label {
+    background-color: #1a1714;
+    color: #f5ede4;
+    border-radius: 7px;
+    padding: 4px 8px;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+}
+
+QComboBox#from_box {
+    background-color: #e8943a;
+    color: #1a1714;
+}
+
+QComboBox#to_box {
+    background-color: #e8943a;
+    color: #1a1714;
+}
+
+
+
+QLabel#react_types {
+    background-color: #e8943a;
+    color: #1a1714;
+    border-radius: 7px;
+    padding: 4px 8px;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+}
+
+/* Fallback for any chart button whose decayType has no explicit rule
+   (composite, unknown, or any future id). Keeps them visible, never white. */
+QPushButton[isotopeBtn="true"] {
+    background-color: #555555;
+    color: white;
+    padding: 0px;
+    margin: 0px;
+    font-size: 8pt;
+}
+
+QPushButton[isotopeBtn="true"][decayType="alpha"] {
+    background-color: #7ed957;
+    color: black;
+}
+
+QPushButton[isotopeBtn="true"][decayType="beta-"] {
+    background-color: #ff6b6b;
+    color: black;
+}
+
+QPushButton[isotopeBtn="true"][decayType="beta+"] {
+    background-color: #4dabf7;
+    color: black;
+}
+
+QPushButton[isotopeBtn="true"][decayType="it"] {
+    background-color: #c0c0c0;
+    color: black;
+}
+
+QPushButton[isotopeBtn="true"][decayType="p"] {
+    background-color: #ffd166;
+    color: black;
+}
+
+QPushButton[isotopeBtn="true"][decayType="n"] {
+    background-color: #f4a261;
+    color: black;
+}
+
+QPushButton[isotopeBtn="true"][decayType="sf"] {
+    background-color: #222222;
+    color: white;
+}
+
+QPushButton[isotopeBtn="true"][decayType="ec"] {
+    background-color: #b9fbc0;
+    color: black;
+}
+
+QPushButton[isotopeBtn="true"][decayType="composite"] {
+    background-color: #8a2be2;
+    color: white;
+}
+
+QPushButton[isotopeBtn="true"][decayType="unknown"] {
+    background-color: #555555;
+    color: white;
+}
+
+QPushButton[isotopeBtn="true"][decayType="stable"],
+QPushButton[isotopeBtn="true"][isStable="true"] {
+    background-color: black;
+    color: white;
+}
+
+QPushButton[isMeta="true"] {
+    border: 1px solid gold;
+}
+
+
+QWidget#types_widget {
+    background-color: #2e2823 ;
+}
+
+/* Primary action buttons — one shared style so the Results run buttons match
+   "Build Burnup Matrix" exactly (same background + font). */
+QPushButton#burnup_pb,
+QPushButton#calculate_pb,
+QPushButton#calc_eq_pb,
+QPushButton#sens_calc_pb {
+    background-color: #c2a23a;
+    color: #1a1714;
+    font-size: 18px;
+    font-weight: 600;
+}
+QPushButton#burnup_pb:hover,
+QPushButton#calculate_pb:hover,
+QPushButton#calc_eq_pb:hover,
+QPushButton#sens_calc_pb:hover {
+    background-color: #d4b454;
+}
+
+QTabWidget#flux_state {
+    background-color: #241f1b;
+}
+
+QLabel#energy_label {
+    color: white;
+}
+
+QLabel#flux_label {
+    color: white;
+}
+
+QLabel#database_label {
+    color: white;
+}
+
+QComboBox#energy_box {
+    background-color: #e8943a;
+    color: #1a1714;
+}
+
+QComboBox#flux_box {
+    background-color: #e8943a;
+    color: #1a1714;
+}
+
+QComboBox#database_box {
+    background-color: #e8943a;
+    color: #1a1714;
+}
+
+QCheckBox#neutron_cb {
+    color: white;
+}
+
+QCheckBox#betaplus_cb {
+    color: white;
+}
+
+QCheckBox#betaminus_cb {
+    color: white;
+}
+
+QCheckBox#alpha_cb {
+    color: white;
+}
+
+QCheckBox#gamma_cb {
+    color: white;
+}
+
+
+QCheckBox#p_cb {
+    color: white;
+}
+
+QCheckBox#betaminus_alpha_cb {
+    color: white;
+}
+
+QCheckBox#betaplus_alpha_cb {
+    color: white;
+}
+
+QCheckBox#ec_cb {
+    color: white;
+}
+
+QCheckBox#arrows_cb {
+    color: white;
+}
+
+
+/*model_results stule sheets*/
+
+QLabel#result_label {
+    color: white;
+}
+
+QTableView#result_table {
+    background-color: #2e2823;
+    border: 5px solid #1a1714;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    padding-right: 300px;
+    padding-left: 40px;
+}
+
+/* Numeric data tables — monospace (tabular figures) so columns of numbers
+   line up; applied to the whole table rather than per-column since there is
+   no per-column font delegate in this codebase. */
+QTableView#result_table,
+QTableView#unified_isotope_table,
+QTableView#evo_result_table,
+QTableView#eq_result_table,
+QTableView#sens_result_table,
+QTableView#sens_lib_result_table,
+QTableView#cycles_table {
+    font-family: 'Consolas', 'Roboto Mono', monospace;
+    font-size: 14px;
+}
+
+QLabel#export_label {
+    color: white;
+}
+
+QPushButton#result_csv_pb {
+    color: #1a1714;
+    background-color: #e8943a;
+}
+
+QPushButton#result_txt_pb {
+    color: #1a1714;
+    background-color: #e8943a;
+}
+
+QPushButton#result_save_session_pb {
+    color: #1a1714;
+    background-color: #c2a23a;
+}
+QPushButton#result_save_session_pb:hover {
+    background-color: #d4b454;
+}
+
+QPushButton#result_open_session_pb {
+    color: #1a1714;
+    background-color: #d4663a;
+}
+QPushButton#result_open_session_pb:hover {
+    background-color: #e07850;
+}
+
+QLabel#init_cond_label{
+    color: #f5ede4;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 4px 6px;
+}
+
+QTableView#init_cond_table {
+    background-color: #2e2823;
+    font-family: 'Consolas', 'Roboto Mono', monospace;
+    padding-top: 10px;
+    padding-bottom: 40px;
+    padding-right: 40px;
+    padding-left: 40px;
+}
+QTableView#init_cond_table::item {
+    background-color: #2e2823;
+    color: #f5ede4;
+}
+QTableView#init_cond_table QScrollBar:vertical {
+    background: #241f1b;
+    width: 12px;
+}
+QTableView#init_cond_table QScrollBar::handle:vertical {
+    background: #3d352e;
+    border-radius: 5px;
+    min-height: 20px;
+}
+QTableView#init_cond_table QScrollBar:horizontal {
+    background: #241f1b;
+    height: 12px;
+}
+QTableView#init_cond_table QScrollBar::handle:horizontal {
+    background: #3d352e;
+    border-radius: 5px;
+    min-width: 20px;
+}
+/* The corner button between the row/column headers is a separate widget
+   that ignores QHeaderView::section styling and defaults to a white Qt
+   palette button unless targeted directly. */
+QTableView#init_cond_table QTableCornerButton::section {
+    background-color: #241f1b;
+    border: 1px solid #3d352e;
+}
+
+QPushButton#dec_lib_apply_pb {
+    background-color: #d4663a;
+    color: #1a1714;
+}
+QPushButton#dec_lib_apply_pb:hover {
+    background-color: #e08458;
+}
+QPushButton#refresh_matrix_pb {
+    background-color: #e8943a;
+    color: #1a1714;
+}
+QPushButton#refresh_matrix_pb:hover {
+    background-color: #f2a854;
+}
+
+
+QLabel#method_label{
+    color: #f5ede4;
+    font-size: 14px;
+}
+
+QComboBox#method_box {
+    background-color: #e8943a;
+    color: #1a1714;
+}
+
+
+QLabel#time_label{
+    color: #f5ede4;
+}
+
+QLineEdit#time_lineedit{
+    background-color: #e8943a;
+    color: #1a1714;
+}
+
+QComboBox#time_unit_box {
+    background-color: #e8943a;
+    color: #1a1714;
+}
+
+QCheckBox#heat_density_cb {
+    color: #f5ede4;
+}
+QCheckBox#product_cb {
+    color: #f5ede4;
+}
+QCheckBox#concentration_cb {
+    color: #f5ede4;
+}
+
+/* model_results — load matrix isotopes into the IC table */
+QPushButton#load_matrix_pb {
+    background-color: #c2a23a;
+    color: #1a1714;
+}
+QPushButton#load_matrix_pb:hover {
+    background-color: #d4b454;
+}
+
+/* model_results — IC table row-management buttons */
+QPushButton#add_row_pb,
+QPushButton#del_row_pb,
+QPushButton#clear_rows_pb,
+QPushButton#load_csv_pb {
+    background-color: #e8943a;
+    color: #1a1714;
+}
+
+QPushButton#add_row_pb:hover,
+QPushButton#del_row_pb:hover,
+QPushButton#clear_rows_pb:hover,
+QPushButton#load_csv_pb:hover {
+    background-color: #f2a854;
+}
+
+/* model_results — input line edits and steps label */
+QLineEdit#flux_lineedit,
+QLineEdit#energy_lineedit,
+QLineEdit#steps_lineedit {
+    background-color: #e8943a;
+    color: #1a1714;
+    border: 1px solid #f2a854;
+}
+
+QLabel#steps_label {
+    color: #f5ede4;
+    font-size: 14px;
+}
+
+
+/*model_graph stylesheets*/
+
+QHBoxLayout#types_hlayout {
+    background-color: red;
+}
+
+QLabel#dpi_label{
+    color: #f5ede4;
+    font-size: 14px;
+}
+
+QLineEdit#dpi_lineedit {
+    color: white;
+    background-color: #2e2823;
+    border-radius: 10px;
+}
+
+
+QLabel#param_label{
+    color: #f5ede4;
+    font-size: 14px;
+}
+
+QLineEdit#param_lineedit {
+    color: white;
+    background-color: #2e2823;
+    border-radius: 10px;
+}
+
+
+QLabel#export_as_label{
+    color: #f5ede4;
+    font-size: 14px;
+}
+
+
+
+QPushButton#export_pdf_pb {
+    color: #1a1714;
+    background-color: #e8943a;
+}
+
+QPushButton#export_img_pb {
+    color: #1a1714;
+    background-color: #e8943a;
+}
+
+QLabel#graphtype_label{
+    color: #f5ede4;
+    font-size: 14px;
+}
+
+QLabel#themes_label{
+    color: #f5ede4;
+    font-size: 14px;
+}
+
+QLabel#legend_label{
+    color: #f5ede4;
+    font-size: 14px;
+}
+
+QLabel#legend_pos_label{
+    color: #f5ede4;
+    font-size: 14px;
+}
+
+QLabel#legend_size_label{
+    color: #f5ede4;
+    font-size: 14px;
+}
+
+QLabel#grid_label{
+    color: #f5ede4;
+    font-size: 14px;
+}
+
+QLabel#x_density_label{
+    color: #f5ede4;
+    font-size: 14px;
+}
+
+QLabel#y_density_label{
+    color: #f5ede4;
+    font-size: 14px;
+}
+
+QLabel#title_label{
+    color: #f5ede4;
+    font-size: 14px;
+}
+
+QLabel#title_header_label{
+    color: #f5ede4;
+    font-size: 14px;
+}
+
+QLabel#title_xaxis_label{
+    color: #f5ede4;
+    font-size: 14px;
+}
+
+
+QLabel#title_yaxis_label{
+    color: #f5ede4;
+    font-size: 14px;
+}
+
+QLabel#normalization_label{
+    color: #f5ede4;
+    font-size: 14px;
+}
+
+QLabel#normalization_xaxis_label{
+    color: #f5ede4;
+    font-size: 14px;
+}
+
+QLabel#normalization_yaxis_label{
+    color: #f5ede4;
+    font-size: 14px;
+}
+
+
+
+
+
+
+
+
+/* model_graph — new controls (data selector / theme / plot) */
+QPushButton#plot_pb {
+    background-color: #c2a23a;
+    color: #1a1714;
+}
+QPushButton#plot_pb:hover {
+    background-color: #d4b454;
+}
+QComboBox#graphtype_combo,
+QComboBox#themes_combo {
+    background-color: #e8943a;
+    color: #1a1714;
+}
+QLabel#graph_note_label {
+    color: #b9c6cc;
+    font-size: 12px;
+}
+
+
+/* IsotopeChart — reaction-config tabs (Task 3) */
+QTabWidget#reaction_tabs::pane {
+    border: 1px solid #3d352e;
+    border-radius: 7px;
+    background: #241f1b;
+    top: -1px;
+}
+QTabWidget#reaction_tabs QTabBar::tab {
+    background-color: #241f1b;
+    color: #c4b6a6;
+    padding: 8px 18px;
+    min-width: 110px;
+    margin-right: 3px;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    font-size: 14px;
+}
+/* Results tabs — "Isotopes & Matrix" needs ~160 px to show fully */
+QTabWidget#result_calc_tabs QTabBar::tab,
+QTabWidget#mode_tabs QTabBar::tab {
+    min-width: 160px;
+}
+QTabWidget#reaction_tabs QTabBar::tab:selected {
+    background-color: #e8943a;
+    color: #1a1714;
+    font-weight: bold;
+}
+QTabWidget#reaction_tabs QTabBar::tab:hover {
+    background-color: #f2a854;
+    color: #1a1714;
+}
+QWidget#reaction_tab_page {
+    background: #241f1b;
+}
+QWidget#reaction_tab_page QCheckBox,
+QWidget#reaction_tab_page QRadioButton,
+QWidget#reaction_tab_page QLabel {
+    color: #f5ede4;
+    background: transparent;
+}
+
+/* IsotopeChart — excluded isotopes (Task 6) */
+QLabel#excluded_label {
+    color: #f5ede4;
+}
+QListWidget#excluded_list {
+    background-color: #2e2823;
+    color: #f5ede4;
+    border: 1px solid #3d352e;
+    border-radius: 7px;
+}
+QPushButton#unexclude_pb,
+QPushButton#clear_excluded_pb {
+    background-color: #e8943a;
+    color: #1a1714;
+}
+QPushButton#unexclude_pb:hover,
+QPushButton#clear_excluded_pb:hover {
+    background-color: #f2a854;
+}
+
+/* model_results / model_IsotopeChart — right panel scroll area */
+QScrollArea#right_panel_scroll {
+    background-color: #241f1b;
+    border: none;
+}
+QScrollArea#right_panel_scroll > QWidget > QWidget {
+    background-color: #241f1b;
+}
+
+/* model_CoreNucleo — split handle between Decay / NReaction panels */
+QSplitter#info_splitter::handle {
+    background-color: #3d352e;
+}
+
+/* model_results — Sensitivity tab: QScrollArea paints its own (light) palette
+   background by default, ignoring the rest of the dark stylesheet unless the
+   area and its inner viewport widget are styled explicitly. */
+QScrollArea#sens_scroll {
+    background-color: #241f1b;
+    border: none;
+}
+QScrollArea#sens_scroll > QWidget > QWidget {
+    background-color: #241f1b;
+}
+
+/* model_graph — isotope legend panel: same QScrollArea default-white-viewport
+   issue as sens_scroll above. */
+QScrollArea#graph_legend_scroll {
+    background-color: #241f1b;
+    border: 1px solid #3d352e;
+}
+QScrollArea#graph_legend_scroll > QWidget > QWidget {
+    background-color: #241f1b;
+}
+QWidget#graph_legend_widget {
+    background-color: #241f1b;
+}
+
+/* Exposure averaging actions */
+QPushButton#exposure_average_pb, QPushButton#exposure_export_pb, QPushButton#exposure_save_pb { color: #1a1714; background-color: #e8943a; }
+QPushButton#exposure_average_pb:hover, QPushButton#exposure_export_pb:hover, QPushButton#exposure_save_pb:hover { background-color: #f2a854; }
+
+/* Isotopes & Matrix actions */
+QPushButton#iso_copy_pb,
+QPushButton#iso_export_csv_pb,
+QPushButton#iso_add_pb,
+QPushButton#iso_remove_pb,
+QPushButton#mdl_add_pb,
+QPushButton#mdl_del_pb {
+    color: #1a1714;
+    background-color: #e8943a;
+    border: 1px solid transparent;
+}
+QPushButton#iso_copy_pb:hover,
+QPushButton#iso_export_csv_pb:hover,
+QPushButton#iso_add_pb:hover,
+QPushButton#iso_remove_pb:hover,
+QPushButton#mdl_add_pb:hover,
+QPushButton#mdl_del_pb:hover { background-color: #f2a854; }
+QPushButton#iso_add_pb,
+QPushButton#mdl_add_pb { background-color: #c2a23a; }
+QPushButton#iso_add_pb:hover,
+QPushButton#mdl_add_pb:hover { background-color: #d4b454; }
+QPushButton#iso_copy_pb:pressed,
+QPushButton#iso_export_csv_pb:pressed,
+QPushButton#iso_add_pb:pressed,
+QPushButton#iso_remove_pb:pressed,
+QPushButton#mdl_add_pb:pressed,
+QPushButton#mdl_del_pb:pressed { background-color: #c97828; color: #ffffff; }
+QPushButton#iso_copy_pb:focus,
+QPushButton#iso_export_csv_pb:focus,
+QPushButton#iso_add_pb:focus,
+QPushButton#iso_remove_pb:focus,
+QPushButton#mdl_add_pb:focus,
+QPushButton#mdl_del_pb:focus { border: 1px solid #1a1714; }
+QPushButton#iso_copy_pb:disabled,
+QPushButton#iso_export_csv_pb:disabled,
+QPushButton#iso_add_pb:disabled,
+QPushButton#iso_remove_pb:disabled,
+QPushButton#mdl_add_pb:disabled,
+QPushButton#mdl_del_pb:disabled { background-color: #2e2823; color: #9b8d80; border: 1px solid transparent; }
+
+/* Graph mode buttons: selection follows the application theme. */
+QPushButton[graphMode="true"] {
+    background-color: #2e2823; color: #f5ede4; border: 1px solid #9b8d80;
+    border-radius: 6px; padding: 6px 14px; min-width: 70px;
+}
+QPushButton[graphMode="true"]:hover { background-color: #3d352e; }
+QPushButton[graphMode="true"]:checked { background-color: #e8943a; color: #1a1714; font-weight: bold; }
+QPushButton[graphMode="true"]:checked:hover { background-color: #e8943a; color: #1a1714; }
+QPushButton[graphMode="true"]:pressed { background-color: #e8943a; color: #1a1714; }
+QPushButton[graphMode="true"]:focus { border: 2px solid #e8943a; padding: 5px 13px; }
+QPushButton[graphMode="true"]:disabled { background-color: #241f1b; color: #9b8d80; border: 1px solid #9b8d80; }
+QPushButton#exposure_average_pb:disabled,
+QPushButton#exposure_export_pb:disabled,
+QPushButton#exposure_save_pb:disabled { background-color: #241f1b; color: #9b8d80; }
