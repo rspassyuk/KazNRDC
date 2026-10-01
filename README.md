@@ -105,3 +105,28 @@ Developed at the Fesenkov Astrophysical Institute, Almaty, Kazakhstan, within gr
 Core team: N. Kenzhebayev, M. Khassanov, R. Spassyuk, D. Anarbek and M. Abishev.
 
 This checkout has no project license file. A public repository alone does not grant an open-source license; the authors must select and add the appropriate license. Nuclear datasets retain their own terms and attribution requirements.
+
+
+## Downloads
+
+Nuclear datasets (`xsdir`) and installation files are distributed separately:
+
+[Download datasets and installation files from Google Drive](https://drive.google.com/drive/folders/1Qvy23GtS8aMXxuuQK3cA7DE3uszLhbq4?usp=sharing)
+
+### Nuclear data setup
+
+Download and extract the nuclear data archive. Place the `xsdir` folder
+in the application directory, alongside `core`, `model`, and `nuclear_data`:
+
+```text
+KazNRDC/
+├── core/
+├── model/
+├── nuclear_data/
+└── xsdir/
+    ├── endf-6/
+    ├── MACS/
+    └── TALYS/
+```
+
+Avoid an extra directory level such as `xsdir/xsdir`.
