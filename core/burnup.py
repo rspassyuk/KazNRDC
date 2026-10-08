@@ -325,9 +325,18 @@ class BurnupMatrix:
             raise RuntimeError("Call build() first.")
         N0 = np.asarray(N0, dtype=float)
         m = method.lower()
-        if m in ("cram16", "cram48"):
+        if m == "cram16":
+            from .cram import cram16_step
+            if not np.isfinite(t_sec) or t_sec < 0:
+                raise ValueError("Evolution duration must be finite and non-negative.")
+            if t_sec == 0:
+                return N0.copy()
+            return cram16_step(self.matrix_A, N0, t_sec)
+        if m == "cram48":
+            from .cram import cram48_step
+            return cram48_step(self.matrix_A, N0, t_sec)
+        if m == "cram16_adaptive":
             from .cram import adaptive_cram16
-            # cram48 is a legacy alias, not an independent 48th-order method.
             return adaptive_cram16(self.matrix_A, N0, t_sec)
         At = self.matrix_A * t_sec
         if m == "pade":
@@ -349,12 +358,13 @@ class BurnupMatrix:
         return res
 
     def _cram16(self, N0, At):
-        from .cram import adaptive_cram16
-        return adaptive_cram16(At, N0, 1.0)
+        from .cram import cram16_step
+        return cram16_step(At, N0, 1.0)
 
     def _cram48(self, N0, At):
-        """Legacy API alias; this is adaptive CRAM-16, not genuine CRAM-48."""
-        return self._cram16(N0, At)
+        """Order-48 incomplete partial factorization."""
+        from .cram import cram48_step
+        return cram48_step(At, N0, 1.0)
 
     # ── heat release ──
     def heat_release(self, N) -> float:

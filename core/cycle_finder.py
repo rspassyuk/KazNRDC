@@ -212,40 +212,60 @@ class CycleAnalyzer:
 
     # ── enumerate all elementary cycles ──
 
-    def find_all_cycles(self) -> List[IsotopeCycle]:
+    def find_all_cycles(self, max_cycles=None, max_length=None, timeout_s=None,
+                        should_cancel=None, progress=None) -> List[IsotopeCycle]:
+        """Iterative enumeration with optional work limits and cancellation.
+
+        Only the lowest-ranked vertex of each cycle may start its search.
+        A nonempty search_status means the returned list may be incomplete.
         """
-        Enumerates all elementary cycles in the network.
-
-        Method:
-          - For each non-trivial SCC, runs DFS from each vertex.
-          - Canonical representation (rotate to min-name) removes duplicates.
-
-        Returns a list of IsotopeCycle sorted by length.
-        """
-        sccs = self.find_sccs()
-        all_cycles: List[IsotopeCycle] = []
-        seen_keys:  Set[tuple]         = set()
-
-        for scc in sccs:
-            scc_set = set(scc.isotopes)
-            # subgraph — only edges within the SCC
-            sub: Dict[Isotope, List] = {
-                v: [(w, lbl, kind, mt)
-                    for (w, lbl, kind, mt) in self._adj.get(v, [])
-                    if w in scc_set]
-                for v in scc.isotopes
-            }
-
-            for start in scc.isotopes:
-                for cycle in self._dfs_from(start, scc_set, sub):
+        import time
+        begin = time.monotonic()
+        self.search_status = ""
+        found = []
+        seen = set()
+        nodes = list(self._isotopes)
+        rank = {v: i for i, v in enumerate(nodes)}
+        for start in nodes:
+            path = {start}
+            steps = []
+            stack = [(start, iter(self._adj.get(start, [])))]
+            while stack:
+                if should_cancel and should_cancel():
+                    self.search_status = "Cancelled; partial results"
+                    return found
+                if timeout_s is not None and time.monotonic() - begin >= timeout_s:
+                    self.search_status = "Time limit reached; partial results"
+                    return found
+                v, edges = stack[-1]
+                edge = next(edges, None)
+                if edge is None:
+                    stack.pop()
+                    path.remove(v)
+                    if steps:
+                        steps.pop()
+                    continue
+                w, label, kind, mt = edge
+                step = CycleStep(v, label, kind, mt)
+                if w is start:
+                    cycle = IsotopeCycle(steps + [step])
                     key = self._canon_key(cycle)
-                    if key not in seen_keys:
-                        seen_keys.add(key)
-                        all_cycles.append(cycle)
-                        scc.cycles.append(cycle)
-
-        all_cycles.sort(key=lambda c: c.length)
-        return all_cycles
+                    if key not in seen:
+                        seen.add(key)
+                        found.append(cycle)
+                        if max_cycles is not None and len(found) >= max_cycles:
+                            self.search_status = "Cycle count limit reached; partial results"
+                            return found
+                elif w not in path and rank[w] > rank[start]:
+                    if max_length is not None and len(steps) + 1 >= max_length:
+                        self.search_status = "Length limit applied; longer cycles may be omitted"
+                        continue
+                    path.add(w)
+                    steps.append(step)
+                    stack.append((w, iter(self._adj.get(w, []))))
+            if progress:
+                progress((rank[start]+1)/max(1,len(nodes)), f"Found {len(found)} cycles")
+        return sorted(found, key=lambda c: c.length)
 
     def _dfs_from(
         self,

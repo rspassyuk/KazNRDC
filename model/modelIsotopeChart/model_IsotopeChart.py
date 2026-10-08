@@ -1220,19 +1220,60 @@ class Right(QVBoxLayout):
             QMessageBox.critical(self._dialog_parent(), "Find Cycles",
                                  "core/cycle_finder.py not found.")
             return
-        analyzer = CycleAnalyzer(self.svc.isotopes)
-        cycles = analyzer.find_all_cycles()
-        cycle_izas = set()
-        for cyc in cycles:
-            for step in cyc.steps:
-                iso = step.isotope
-                if hasattr(iso, "Z") and hasattr(iso, "A"):
-                    cycle_izas.add((iso.Z, iso.A))
-        if self.left_widget:
-            self.left_widget.set_cycle_highlights(cycle_izas)
-        self.svc.last_cycles = cycles
-        self.svc._fire_cycles_found(cycles)
-        QMessageBox.information(
-            self._dialog_parent(), "Find Cycles",
-            f"Found {len(cycles)} cycle(s) involving {len(cycle_izas)} isotope(s)."
-        )
+        if getattr(self, "_cycle_search_running", False):
+            return
+        analyzer = CycleAnalyzer(list(self.svc.isotopes))
+        matrix = getattr(self.svc, "matrix", None)
+        config = getattr(matrix, "config", None)
+        allowed_mt = {_REACTION_MTS[name] for name, cb in self._reac_checks.items() if cb.isChecked()}
+        allowed_decay = self._get_decay_mode_filter()
+        # Snapshot the adjacency before starting the worker; no GUI access there.
+        for iso in analyzer._isotopes:
+            edges = []
+            for d in iso.getListOfDecays():
+                if d.product not in analyzer._iso_set or d.branch <= 0:
+                    continue
+                if allowed_decay is not None and d.mode not in allowed_decay and not (d.mode == "ec/beta+" and ("ec" in allowed_decay or "beta+" in allowed_decay)):
+                    continue
+                if config and not config.is_decay_allowed(iso.half_life_s):
+                    continue
+                edges.append((d.product, d.mode, "decay", None))
+            for r in iso.getListOfReactions():
+                if r.product in analyzer._iso_set and r.mt in allowed_mt and r.sigma_barn > 0:
+                    edges.append((r.product, mt_symbol(r.mt), "reaction", r.mt))
+            analyzer._adj[iso] = edges
+        by_name = {iso.name: iso for iso in analyzer._isotopes}
+        for link in getattr(config, "manual_decay_links", []):
+            parent = by_name.get(link.get("parent"))
+            daughter = by_name.get(link.get("daughter"))
+            if parent is not None and daughter is not None and link.get("branch", 1) > 0:
+                analyzer._adj[parent].append((daughter, link.get("mode", "manual"), "decay", None))
+        self._cycle_search_running = True
+        self.find_cycle_pb.setEnabled(False)
+
+        def search(progress=None, should_cancel=None):
+            cycles = analyzer.find_all_cycles(max_cycles=200, max_length=30,
+                timeout_s=5.0, should_cancel=should_cancel, progress=progress)
+            return cycles, analyzer.search_status
+
+        def finish(result):
+            self._cycle_search_running = False
+            self.find_cycle_pb.setEnabled(True)
+            cycles, status = result
+            cells = {(step.isotope.Z, step.isotope.A) for c in cycles for step in c.steps}
+            if self.left_widget:
+                self.left_widget.set_cycle_highlights(cells)
+            self.svc.last_cycles = cycles
+            self.svc._fire_cycles_found(cycles)
+            QMessageBox.information(self._dialog_parent(), "Find Cycles",
+                f"Found {len(cycles)} cycles involving {len(cells)} isotopes.\n"
+                + (status or "Search completed.")
+                + "\nLimits: 200 cycles, 30 transitions per cycle, 5 seconds.")
+
+        def failed(message):
+            self._cycle_search_running = False
+            self.find_cycle_pb.setEnabled(True)
+            QMessageBox.critical(self._dialog_parent(), "Find Cycles", message)
+
+        run_with_progress(self._dialog_parent(), "Finding cycles", search,
+                          on_done=finish, on_error=failed, cancelable=True)

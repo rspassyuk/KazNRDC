@@ -83,10 +83,18 @@ class AdaptiveCramTests(unittest.TestCase):
         matrix, initial=chain()
         mt=BurnupMatrix([Isotope(26,"Fe",a) for a in range(1,181)],BurnupConfig())
         mt.matrix_A=matrix.toarray()
-        actual=mt.solve(initial,70,"cram16")
+        actual=mt.solve(initial,70,"cram16_adaptive")
         self.assertGreaterEqual(actual.min(),-1e-14)
         self.assertGreater(actual[100],0)
         np.testing.assert_array_equal(mt.matrix_A,matrix.toarray())
+
+    def test_public_single_step_dispatch_and_zero_time(self):
+        matrix, initial = chain()
+        mt = BurnupMatrix([Isotope(26, "Fe", a) for a in range(1, 181)], BurnupConfig())
+        mt.matrix_A = matrix.toarray()
+        np.testing.assert_allclose(mt.solve(initial, 70, "cram16"), cram16_step(matrix, initial, 70), atol=1e-14)
+        self.assertLess(mt.solve(initial, 70, "cram16").min(), -1e-10)
+        np.testing.assert_array_equal(mt.solve(initial, 0, "cram16"), initial)
 
     def test_adaptive_trajectory_can_be_averaged(self):
         matrix, initial=chain(120)

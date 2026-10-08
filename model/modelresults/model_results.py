@@ -1855,6 +1855,8 @@ class Right(QVBoxLayout):
         self.method_box = QComboBox()
         self.method_box.setObjectName('method_box')
         self.method_box.addItem('CRAM-16', 'cram16')
+        self.method_box.addItem('CRAM-16 (adaptive)', 'cram16_adaptive')
+        self.method_box.setToolTip('CRAM-16: one rational step per output time.\nCRAM-16 (adaptive): internal step refinement and error checks.')
         self.method_box.addItem('CRAM-48', 'cram48')
         self.method_box.addItem('Padé (expm)', 'pade')
         meth_row.addWidget(self.method_box)

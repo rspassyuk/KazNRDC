@@ -1026,9 +1026,10 @@ class NuclearService:
 
         metadata["solver_implementation"] = (
             "Adaptive sparse CRAM-16 with step doubling"
-            if method.lower() in ("cram16", "cram48") else method)
+            if method.lower() == "cram16_adaptive" else
+            "Sparse CRAM-16, single step" if method.lower() == "cram16" else method)
         if method.lower() == "cram48":
-            metadata["solver_implementation"] += " (legacy cram48 alias)"
+            metadata["solver_implementation"] = "Sparse IPF CRAM-48, single step"
 
         # Manual evolve loop (mirrors BurnupMatrix.evolve) so we can report
         # per-step progress and honour cancellation.
@@ -1040,7 +1041,7 @@ class NuclearService:
                 raise RuntimeError("Calculation cancelled.")
             if progress and (i % 4 == 0 or i == total - 1):
                 progress(0.5 + 0.48 * (i / total), f"Solving time step {i + 1}/{total}…")
-            if method.lower() in ("cram16", "cram48") and t > 0:
+            if method.lower() == "cram16_adaptive" and t > 0:
                 from .cram import adaptive_cram16
                 traj.append(adaptive_cram16(mtx.matrix_A, N0, float(t),
                                             should_cancel=should_cancel))
