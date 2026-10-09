@@ -16,7 +16,7 @@ Chain structure:
     Pb-211 ─β⁻→ Bi-211 ─α→ Tl-207 ─β⁻→ Pb-207
     Po-211 ─α→ Pb-207
 
-Run from KazNRDC folder:
+Run from NuMatRx folder:
     python examples/sprocess_termination.py
 """
 
@@ -24,7 +24,7 @@ import os
 import sys
 import numpy as np
 
-# Adjust path to import KazNRDC packages when executed from examples/
+# Adjust path to import NuMatRx packages when executed from examples/
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from core import BurnupConfig, BurnupMatrix, IsotopeBuilder, plot_concentrations, plot_heat

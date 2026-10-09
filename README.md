@@ -1,6 +1,8 @@
-# KazNRDC
+# NuMatRx
 
-**Kazakhstan Nuclear Reaction Data Code** is a Python/PyQt5 desktop application for nuclear-data inspection, nuclide-network construction and fixed-condition transmutation calculations. It supports reactor-physics and nucleosynthesis studies using user-supplied evaluated data.
+![NuMatRx](model/resources/branding/numatrx_logo_light.png)
+
+**NuMatRx** is a Python/PyQt5 desktop application for nuclear-data inspection, nuclide-network construction and fixed-condition transmutation calculations. It supports reactor-physics and nucleosynthesis studies using user-supplied evaluated data.
 
 ## Start here
 
@@ -14,8 +16,8 @@
 Python 3.11 or newer is required. Use a virtual environment. The application uses Qt 5; Linux systems also need the system libraries required by Qt's platform plugin.
 
 ```bash
-git clone https://github.com/rspassyuk/KazNRDC.git
-cd KazNRDC
+git clone https://github.com/rspassyuk/KazNRDC.git NuMatRx
+cd NuMatRx
 python -m venv .venv
 ```
 
@@ -119,7 +121,7 @@ Download and extract the nuclear data archive. Place the `xsdir` folder
 in the application directory, alongside `core`, `model`, and `nuclear_data`:
 
 ```text
-KazNRDC/
+NuMatRx/
 ├── core/
 ├── model/
 ├── nuclear_data/

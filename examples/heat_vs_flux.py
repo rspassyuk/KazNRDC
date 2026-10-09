@@ -10,7 +10,7 @@ For each flux value, the matrix is rebuilt (reaction rates ∝ Φ),
 the system reaches equilibrium, and total heat (reactions + decays)
 is calculated based on the equilibrium concentration slice.
 
-Run from KazNRDC folder:
+Run from NuMatRx folder:
     python examples/heat_vs_flux.py
 """
 

@@ -1,10 +1,10 @@
 """
 tests/test_all.py
 =================
-Standalone tests for all KazNRDC core modules.
+Standalone tests for all NuMatRx core modules.
 
 No nuclear data files (xsdir/) required — all isotopes built manually.
-Run from the kaznrdc9/ project root:
+Run from the numatrx9/ project root:
 
     python -m pytest tests/test_all.py -v
     # or directly:

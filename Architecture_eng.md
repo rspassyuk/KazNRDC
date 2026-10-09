@@ -1,6 +1,6 @@
 > For the maintained publication overview and current solver/averaging behavior, see [Architecture](docs/architecture.md) and [Methods](docs/methods.md). This earlier detailed API reference may describe older interfaces.
 
-# KazNRDC Architecture Reference
+# NuMatRx Architecture Reference
 
 Complete technical reference: every module, class, method, and call example.
 Goal: understand the full system and run any method independently without the GUI.

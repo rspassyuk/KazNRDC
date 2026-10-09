@@ -575,7 +575,7 @@ class model_results(QObject):
                                 "No evolution results to save.\nRun a calculation first.")
             return
         path, _ = QFileDialog.getSaveFileName(
-            None, "Save session", "session.kaz", "KazNRDC session (*.kaz);;All files (*)")
+            None, "Save session", "session.kaz", "NuMatRx session (*.kaz);;All files (*)")
         if not path:
             return
         try:
@@ -588,7 +588,7 @@ class model_results(QObject):
 
     def on_open_session(self) -> None:
         path, _ = QFileDialog.getOpenFileName(
-            None, "Open saved session", "", "KazNRDC session (*.kaz);;All files (*)")
+            None, "Open saved session", "", "NuMatRx session (*.kaz);;All files (*)")
         if not path:
             return
         try:

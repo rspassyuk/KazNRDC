@@ -215,7 +215,7 @@ class ExposurePanel(QWidget):
         if self.run is None or self.result is None:
             return
         path, _ = QFileDialog.getSaveFileName(self, "Save averaged session", "exposure.kaz",
-                                             "KazNRDC session (*.kaz)")
+                                             "NuMatRx session (*.kaz)")
         if path:
             try:
                 from core.session import save_session

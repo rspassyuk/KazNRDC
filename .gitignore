@@ -30,3 +30,10 @@ Thumbs.db
 /Architecture_rus.md
 /docs/manual-ru.md
 .ipynb_checkpoints/
+
+# Private nuclear-data overrides and local exports
+/user_db/
+/isotopes.json
+*.log
+
+.jupyter/

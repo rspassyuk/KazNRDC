@@ -32,8 +32,8 @@ from PyQt5.QtWidgets import (
 #     regardless of the current working directory (Ubuntu, forward slashes). ---
 from pathlib import Path
 
-MODELS_DIR = Path(__file__).resolve().parent          # …/KazNRDC/model
-PROJECT_ROOT = MODELS_DIR.parent                       # …/KazNRDC  (xsdir, icons)
+MODELS_DIR = Path(__file__).resolve().parent          # …/NuMatRx/model
+PROJECT_ROOT = MODELS_DIR.parent                       # …/NuMatRx  (xsdir, icons)
 # Order matters: PROJECT_ROOT must precede MODELS_DIR so the `core/` package
 # wins over this file (which is itself named core.py) for `import core.*`.
 for _p in (str(MODELS_DIR), str(PROJECT_ROOT)):
@@ -50,12 +50,11 @@ from core.service import init_service, get_service
 # Asset resolution (Ubuntu-safe, pathlib)
 # -------------------------
 def app_icon_path() -> str:
-    p = PROJECT_ROOT / "kaznrdc_1024.png"
-    return str(p) if p.is_file() else ""
+    return logo_path("dark")
 
 
 def logo_path(theme="dark") -> str:
-    p = MODELS_DIR / "resources" / "branding" / f"kaznrdc_logo_{theme}.png"
+    p = MODELS_DIR / "resources" / "branding" / f"numatrx_logo_{theme}.png"
     return str(p) if p.is_file() else ""
 
 
@@ -150,7 +149,7 @@ class MainWindow(QMainWindow):
         # Theme first (optional)
         self.apply_theme("dark.css")
 
-        self.setWindowTitle("KazNRDC")
+        self.setWindowTitle("NuMatRx")
         icon_path = app_icon_path()
         if icon_path:
             self.setWindowIcon(QIcon(icon_path))
@@ -215,7 +214,7 @@ class MainWindow(QMainWindow):
                 "Nuclear-data init failed",
                 "Nuclear-data environment failed to initialise.\n\n"
                 f"{e}\n\n"
-                "Verify that the 'xsdir' folder sits at the project root "
+                "Verify that the 'xsdir' folder sits at the project root or beside it "
                 "and contains 'endf-6/' and 'MACS/'."
             )
             # Continue: the GUI is still usable for non-data tasks.
@@ -603,7 +602,7 @@ class MainWindow(QMainWindow):
         self.SetPage(index)
 
     def Scan_models(self, base_path=None):
-        # Models live next to this launcher (…/KazNRDC/model/model*).
+        # Models live next to this launcher (…/NuMatRx/model/model*).
         base_path = str(MODELS_DIR)
         print("Scanning models in:", base_path)
 

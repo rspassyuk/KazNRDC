@@ -1,4 +1,4 @@
-# User guide
+# User guide — NuMatRx
 
 ## Installation and data
 
@@ -176,3 +176,7 @@ Save plot images from the Matplotlib toolbar. Numerical exports and figures are 
 | s-process curve disagrees with a reference | Seed composition, metallicity assumptions, MACS energy, density/flux, duration distribution, branching and normalization |
 
 Record code version, data versions, source priorities, selected isotopes, filters, manual channels, boundaries, N0, flux/density, energy, solver, saved times, averaging parameters and display normalization. This model does not supply a universal flux/duration pair that reproduces every stellar s-process component.
+
+## Shared nuclear-data directory
+
+The application first looks for `xsdir/` inside the project. If it is absent, it also checks for `xsdir/` beside the project folder. Nuclear libraries and private `user_db/` overrides are not included in the public source distribution. Existing `.kaz` sessions retain their format.

@@ -1,4 +1,4 @@
-# Architecture and source map
+# Architecture and source map — NuMatRx
 
 ## Data flow
 

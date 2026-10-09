@@ -243,7 +243,12 @@ class NuclearService:
         self.macs_library = macs_library
 
         step(0.05, "Initializing databases…")
-        info = EndfPathHolder.init_xsdir(str(self.project_root / "xsdir"))
+        data_root = self.project_root / "xsdir"
+        if not data_root.exists():
+            shared_root = self.project_root.parent / "xsdir"
+            if shared_root.is_dir():
+                data_root = shared_root
+        info = EndfPathHolder.init_xsdir(str(data_root))
         self.xsdir = Path(info["xsdir"])
         self.endf6_root = Path(info["endf-6"])
 
