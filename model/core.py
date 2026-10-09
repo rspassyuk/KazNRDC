@@ -12,7 +12,7 @@ import inspect
 import os
 import sys
 from PyQt5.QtCore import Qt, QSize
-from PyQt5.QtGui import QIcon
+from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtWidgets import (
     QAction,
     QApplication,
@@ -54,8 +54,13 @@ def app_icon_path() -> str:
     return str(p) if p.is_file() else ""
 
 
+def logo_path(theme="dark") -> str:
+    p = MODELS_DIR / "resources" / "branding" / f"kaznrdc_logo_{theme}.png"
+    return str(p) if p.is_file() else ""
+
+
 def splash_image_path() -> str:
-    p = PROJECT_ROOT / "start_image.png"
+    p = Path(logo_path("dark")) if logo_path("dark") else PROJECT_ROOT / "start_image.png"
     return str(p) if p.is_file() else ""
 
 
@@ -255,6 +260,7 @@ class MainWindow(QMainWindow):
     # ---------------- menu
     def init_menu(self):
         menu_bar = self.menuBar()
+        self._sync_branding(getattr(self, "_theme_key", "dark"))
 
         view_menu = menu_bar.addMenu("View")
         view_light_action = QAction("Light", self)
@@ -328,12 +334,37 @@ class MainWindow(QMainWindow):
         # Broadcast to every loaded model page (e.g. the Graph panel's own
         # matplotlib colour theme) so one switch updates the whole app at once.
         theme_key = "light" if "light" in theme_file.lower() else "dark"
+        self._theme_key = theme_key
+        self._sync_branding(theme_key)
         get_service().set_theme(theme_key)
 
         # Dark theme → orange (OR) icons; light theme → green (GR) icons.
         # Icon color signals the theme palette; active state is shown via
         # CSS :checked (border/background), not by icon switching.
         self._sync_toolbar_icons(theme_key)
+
+    def _sync_branding(self, theme_key: str):
+        pixmap = QPixmap(logo_path(theme_key))
+        if pixmap.isNull():
+            return
+        # Use the emblem area of the horizontal artwork for a square window icon.
+        emblem = pixmap.copy(int(pixmap.width() * 0.07),
+                             int(pixmap.height() * 0.23),
+                             int(pixmap.width() * 0.25),
+                             int(pixmap.height() * 0.51))
+        square = QPixmap(max(emblem.width(), emblem.height()),
+                         max(emblem.width(), emblem.height()))
+        square.fill(Qt.transparent)
+        from PyQt5.QtGui import QPainter
+        painter = QPainter(square)
+        painter.drawPixmap((square.width() - emblem.width()) // 2,
+                           (square.height() - emblem.height()) // 2, emblem)
+        painter.end()
+        icon = QIcon(square)
+        self.setWindowIcon(icon)
+        app = QApplication.instance()
+        if app is not None:
+            app.setWindowIcon(icon)
 
     def _sync_toolbar_icons(self, theme_key: str):
         if not hasattr(self, "models_info") or not self.models_info:
